@@ -6,12 +6,12 @@ require 'steam_club_api/version'
 Gem::Specification.new do |spec|
   spec.name          = "steam_club_api"
   spec.version       = SteamClubApi::VERSION
-  spec.authors       = ["andrerpbts"]
-  spec.email         = ["andrerpbts@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.authors       = ["andrerpbts", "rodrigovirgilio"]
+  spec.email         = ["andrerpbts@gmail.com", "virgilio@virgilio.eti.br"]
+  spec.summary       = %q{Handles the interactions with Steam}
+  spec.description   = %q{Handles the interactions with Steam}
   spec.homepage      = ""
-  spec.license       = "MIT"
+  spec.license       = ""
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
@@ -20,4 +20,13 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.6"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "httparty"
+  spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency "factory_girl", "~> 4.0"
+  spec.add_development_dependency "codeclimate-test-reporter"
+  spec.add_development_dependency "webmock", "~> 1.18.0"
+  spec.add_development_dependency "pry"
+
+  spec.add_dependency "activesupport"
+  spec.add_dependency "virtus"
 end
