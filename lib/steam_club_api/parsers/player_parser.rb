@@ -16,14 +16,14 @@ module SteamClubAPI
         new(response).parse
       end
 
+      def player_params
+        Hash[profile.map { |key, value| [key.underscore.downcase.to_sym, value] }]
+      end
+
       private
 
       def default_entity
         SteamClubAPI::Entities::Player
-      end
-
-      def player_params
-        Hash[profile.map { |key, value| [key.underscore.downcase.to_sym, value] }]
       end
 
       def profile
