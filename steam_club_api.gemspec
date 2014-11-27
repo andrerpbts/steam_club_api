@@ -25,6 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "codeclimate-test-reporter"
   spec.add_development_dependency "webmock", "~> 1.18.0"
   spec.add_development_dependency "pry"
+  spec.add_development_dependency "rspec-virtus"
 
   spec.add_dependency "activesupport"
   spec.add_dependency "virtus"
