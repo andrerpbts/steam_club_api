@@ -3,7 +3,7 @@ module SteamClubAPI
     attr_reader :parser
 
     URLS = {
-      username: "http://steamcommunity.com/id/{{query}}?xml=1",
+      custom_url: "http://steamcommunity.com/id/{{query}}?xml=1",
       steam_id64: "http://steamcommunity.com/profiles/{{query}}?xml=1"
     }
 
@@ -17,7 +17,7 @@ module SteamClubAPI
       when /^(?<num>\d+)$/
         :steam_id64
       else
-        :username
+        :custom_url
       end
 
       new.search(type, query, options)
@@ -27,8 +27,7 @@ module SteamClubAPI
       return false unless urls.include?(type)
 
       url = options.fetch :url, urls[type]
-      url.gsub!('{{query}}', query)
-      parser.parse request(:get, resource_name: url)
+      parser.parse request(:get, resource_name: url.gsub('{{query}}', query))
     end
 
     private

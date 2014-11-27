@@ -13,7 +13,7 @@ describe SteamClubAPI::PlayerResource do
 
     it "calls the search for username" do
       expect(subject).to receive_message_chain("new.search")
-        .with(:username, 'KiLLeR', options) { :player }
+        .with(:custom_url, 'KiLLeR', options) { :player }
       subject.search 'KiLLeR', options
     end
 
@@ -31,7 +31,7 @@ describe SteamClubAPI::PlayerResource do
       expect(subject).to receive(:request).with(:get, resource_name: expected_url)
       expect(subject.parser).to receive(:parse)
 
-      subject.search :username, query, options
+      subject.search :custom_url, query, options
     end
 
     it "returns false if passed non-recognized type" do

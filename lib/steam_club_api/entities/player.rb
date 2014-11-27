@@ -19,10 +19,6 @@ module SteamClubAPI
       attribute :trade_ban_state, String
       attribute :is_limited_account, Integer
 
-      def username
-        custom_url
-      end
-
       def steam_id32
         steam_id64 - 76561197960265728
       end

@@ -21,10 +21,6 @@ describe SteamClubAPI::Entities::Player do
   it { expect(subject.trade_ban_state).to eq(player.trade_ban_state) }
   it { expect(subject.is_limited_account).to eq(player.is_limited_account) }
 
-  describe "#username" do
-    it { expect(subject.username).to eq(subject.custom_url) }
-  end
-
   describe "#steam_id32" do
     it { expect(subject.steam_id32).to eq(steam_id32) }
   end
