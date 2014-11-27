@@ -15,6 +15,9 @@ module SteamClubAPI
       attribute :location, String
       attribute :realname, String
       attribute :summary, String
+      attribute :vac_banned, Integer
+      attribute :trade_ban_state, String
+      attribute :is_limited_account, Integer
 
       def username
         custom_url
@@ -24,7 +27,7 @@ module SteamClubAPI
         steam_id64 - 76561197960265728
       end
 
-      def steam_tag
+      def steam_id32_tag
         "STEAM_#{privacy}:#{steam_id64 % 2}:#{steam_id32}"
       end
 
@@ -38,6 +41,14 @@ module SteamClubAPI
 
       def privacy
         public? && 1 || 0
+      end
+
+      def vac_banned?
+        vac_banned == 1
+      end
+
+      def limited_account?
+        is_limited_account == 1
       end
     end
   end
