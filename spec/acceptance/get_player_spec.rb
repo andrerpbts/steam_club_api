@@ -2,23 +2,23 @@ require 'spec_helper'
 
 describe 'Get player' do
   let(:player_resource) { SteamClubAPI::PlayerResource }
-  let(:username) { 'player' }
+  let(:custom) { 'player' }
   let(:steamid) { '123' }
-  let(:username_url) { 'http://www.username.com/{{query}}' }
+  let(:custom_url) { 'http://www.custom.com/{{query}}' }
   let(:steamid_url) { 'http://www.steamid.com/{{query}}' }
 
   before do
-    WebMock.stub_request(:get, /username.com/)
+    WebMock.stub_request(:get, /custom.com/)
     WebMock.stub_request(:get, /steamid.com/)
   end
 
-  it 'get player by username' do
-    player_resource.search username, url: username_url
-    expect(WebMock).to have_requested(:get, username_url.gsub('{{query}}', username))
+  it 'get player by custom' do
+    player_resource.search custom, custom_url: custom_url
+    expect(WebMock).to have_requested(:get, custom_url.gsub('{{query}}', custom))
   end
 
   it 'get player by stemaid' do
-    player_resource.search steamid, url: steamid_url
+    player_resource.search steamid, steam_id64_url: steamid_url
     expect(WebMock).to have_requested(:get, steamid_url.gsub('{{query}}', steamid))
   end
 end
