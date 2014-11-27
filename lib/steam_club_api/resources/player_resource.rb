@@ -4,7 +4,7 @@ module SteamClubAPI
 
     URLS = {
       username: "http://steamcommunity.com/id/{{query}}?xml=1",
-      steamid64: "http://steamcommunity.com/profiles/{{query}}?xml=1"
+      steam_id64: "http://steamcommunity.com/profiles/{{query}}?xml=1"
     }
 
     def initialize(options = {})
@@ -24,6 +24,8 @@ module SteamClubAPI
     end
 
     def search(type, query, options)
+      return false unless urls.include?(type)
+
       url = options.fetch :url, urls[type]
       url.gsub!('{{query}}', query)
       parser.parse request(:get, resource_name: url)
