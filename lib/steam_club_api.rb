@@ -10,9 +10,12 @@ module SteamClubAPI
 
   module Entities
     require_relative 'steam_club_api/entities/player'
+    require_relative 'steam_club_api/entities/rsa_key'
   end
 
   module Parsers
+    require_relative 'steam_club_api/parsers/parser'
+    require_relative 'steam_club_api/parsers/rsa_key_parser'
     require_relative 'steam_club_api/parsers/player_parser'
   end
 

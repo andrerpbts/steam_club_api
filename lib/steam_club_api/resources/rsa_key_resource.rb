@@ -5,6 +5,7 @@ module SteamClubAPI
     def initialize(options = {})
       super
       @rsa_key_url = options.fetch(:rsa_key_url, default_rsa_key_url)
+      @parser = options.fetch(:parser, default_parser)
       @query = {}
     end
 
@@ -16,7 +17,7 @@ module SteamClubAPI
 
     def get(username)
       query[:username] = username
-      request(:post, request_options)
+      parser.parse request(:post, request_options)
     end
 
     def self.get(username, options = {})
@@ -37,5 +38,8 @@ module SteamClubAPI
       "http://store.steampowered.com/login/getrsakey/"
     end
 
+    def default_parser
+      SteamClubAPI::Parsers::RSAKeyParser
+    end
   end
 end
