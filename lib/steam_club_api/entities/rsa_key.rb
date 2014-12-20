@@ -6,7 +6,7 @@ module SteamClubAPI
       attribute :publickey_mod, String
       attribute :publickey_exp, String
       attribute :timestamp, Integer
-      attribute :steamid, String
+      attribute :steamid, Integer
     end
   end
 end
