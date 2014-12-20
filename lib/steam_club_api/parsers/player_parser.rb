@@ -1,19 +1,8 @@
 module SteamClubAPI
   module Parsers
-    class PlayerParser
-      attr_reader :response, :entity
-
-      def initialize(response, options = {})
-        @response = response
-        @entity = options.fetch :entity, default_entity
-      end
-
+    class PlayerParser < Parser
       def parse
         entity.new player_params
-      end
-
-      def self.parse(response)
-        new(response).parse
       end
 
       def player_params
@@ -28,10 +17,6 @@ module SteamClubAPI
 
       def profile
         parsed_response.symbolize_keys.fetch :profile, {}
-      end
-
-      def parsed_response
-        response.parsed_response || {}
       end
     end
   end

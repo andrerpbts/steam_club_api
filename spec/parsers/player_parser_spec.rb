@@ -30,6 +30,4 @@ describe SteamClubAPI::Parsers::PlayerParser do
     end
     it { expect(subject.player_params).to eq(expected_params) }
   end
-
-
 end
