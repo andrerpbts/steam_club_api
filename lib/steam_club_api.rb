@@ -6,6 +6,7 @@ require 'virtus'
 module SteamClubAPI
   require_relative 'steam_club_api/resources/resource'
   require_relative 'steam_club_api/resources/player_resource'
+  require_relative 'steam_club_api/resources/rsa_key_resource'
 
   module Entities
     require_relative 'steam_club_api/entities/player'
