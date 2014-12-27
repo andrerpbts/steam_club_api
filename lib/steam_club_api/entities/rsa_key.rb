@@ -12,6 +12,11 @@ module SteamClubAPI
         @rsa ||= generate_rsa
       end
 
+      def encrypt(plain_text)
+        plain_text.gsub!(/[^\x00-\x7F]/i, '')
+        rsa.public_encrypt(plain_text).unpack('H*')[0]
+      end
+
       private
 
       def mod

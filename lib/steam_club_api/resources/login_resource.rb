@@ -1,48 +1,52 @@
 module SteamClubAPI
   class LoginResource < Resource
-    attr_reader :user_auth_url, :session_key, :query, :certificate_file
+    attr_reader :user_auth_url, :query
 
     def initialize(options = {})
       super
       @user_auth_url = options.fetch :user_auth_url, default_user_auth_url
-      @certificate_file = options.fetch :certificate_file, default_certificate_file
-      @session_key = OpenSSL::Random.random_bytes(32)
-      @query = { sessionkey: crypted_session_key }
+      @query = default_query
     end
 
     def headers
       {
-        'Content-Type' => 'application/x-www-form-urlencoded'
+        'Content-Type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+        'User-Agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.116 Safari/537.36',
+        'Accept' => 'application/json, text/javascript;q=0.9, */*;q=0.5'
       }
     end
 
-    def self.login(steam_id64, password, options = {})
-      new(options).login(steam_id64, password)
+    def self.login(username, password, auth_options = {}, options = {})
+      new(options).login(username, password, auth_options)
     end
 
-    def login(steam_id64, password)
-      query[:steamid] = steam_id64
-      query[:encrypted_loginkey] = encrypt(password)
+    def login(username, password, auth_options = {})
+      query[:username] = username
+      query[:password] = rsa_key.encrypt(password)
+      query[:rsatimestamp] = rsa_key.timestamp
+
+      auth_options.slice!(allowed_auth_options)
+      query.merge!(auth_options)
+
       request(:post, request_options)
     end
 
     private
 
-    def encrypt(password)
-      iv = OpenSSL::Random.random_bytes(16)
-      aes = OpenSSL::Cipher::Cipher.new("AES-256-CBC")
-      aes.encrypt
-      aes.key = session_key
-      aes.iv = iv if iv != nil
-      (aes.update(password) + aes.final).unpack("H*")[0]
+    def default_query
+      {
+        emailauth: '',
+        loginfriendlyname: '',
+        captchagid: '',
+        captcha_text: '',
+        emailsteamid: '',
+        rsatimestamp: '',
+        remember_login: 'true'
+      }
     end
 
-    def crypted_session_key
-      OpenSSL::PKey::RSA.new(certificate, session_key)
-    end
-
-    def certificate
-      File.read certificate_file
+    def allowed_auth_options
+      [:captchagid, :captcha_text, :emailauth, :loginfriendlyname]
     end
 
     def request_options
@@ -53,12 +57,12 @@ module SteamClubAPI
       }
     end
 
-    def default_certificate_file
-      File.expand_path('../../assets/cert.crt', __FILE__)
+    def rsa_key
+      @rsa_key ||= SteamClubAPI::RSAKeyResource.get(query[:username])
     end
 
     def default_user_auth_url
-      "https://api.steampowered.com/ISteamUserAuth/AuthenticateUser/v1"
+      "https://steamcommunity.com/login/dologin/"
     end
   end
 end
