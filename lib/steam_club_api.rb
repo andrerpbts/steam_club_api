@@ -4,6 +4,8 @@ require 'httparty'
 require 'virtus'
 
 module SteamClubAPI
+  require_relative 'steam_club_api/utils/crypto_util'
+
   require_relative 'steam_club_api/resources/resource'
   require_relative 'steam_club_api/resources/login_resource'
   require_relative 'steam_club_api/resources/player_resource'

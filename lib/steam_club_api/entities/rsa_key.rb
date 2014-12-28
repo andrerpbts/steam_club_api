@@ -13,11 +13,8 @@ module SteamClubAPI
       end
 
       def encrypt(plain_text)
-        plain_text.gsub!(/[^\x00-\x7F]/i, '')
-        rsa.public_encrypt(plain_text).unpack('H*')[0]
+        Base64.encode64(rsa.public_encrypt(plain_text)).gsub(/\n/, '')
       end
-
-      private
 
       def mod
         publickey_mod.to_i(16)
@@ -26,6 +23,8 @@ module SteamClubAPI
       def exp
         publickey_exp.to_i(16)
       end
+
+      private
 
       def generate_rsa
         OpenSSL::PKey::RSA.new.tap do |rsa_key|

@@ -21,17 +21,21 @@ module SteamClubAPI
     end
 
     def login(username, password, auth_options = {})
-      query[:username] = username
-      query[:password] = rsa_key.encrypt(password)
+      query[:username] = remove_non_ascii(username)
+      query[:password] = rsa_key.encrypt(remove_non_ascii(password))
       query[:rsatimestamp] = rsa_key.timestamp
 
-      auth_options.slice!(allowed_auth_options)
+      auth_options.slice!(*allowed_auth_options)
       query.merge!(auth_options)
 
       request(:post, request_options)
     end
 
     private
+
+    def remove_non_ascii(text)
+      text.gsub(/[^\x00-\x7F]/i, '')
+    end
 
     def default_query
       {
