@@ -30,7 +30,7 @@ module SteamClubAPI
       {
         headers: headers,
         resource_name: rsa_key_url,
-        body: query
+        query: query
       }
     end
 

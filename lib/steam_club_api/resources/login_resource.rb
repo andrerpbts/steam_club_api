@@ -5,7 +5,7 @@ module SteamClubAPI
     def initialize(username, password, options = {})
       super(options)
       @user_auth_url = options.fetch :user_auth_url, default_user_auth_url
-      @rsa_key = options.fetch :rsa_key, nil
+      @rsa_key = options[:rsa_key]
       @username = remove_non_ascii(username)
       @password = remove_non_ascii(password)
       @auth_options = {}
