@@ -32,7 +32,7 @@ describe SteamClubAPI::RSAKeyResource do
     let(:request_options) do
       {
         resource_name: options[:rsa_key_url],
-        body: { username: username },
+        query: { username: username },
         headers: headers
       }
     end

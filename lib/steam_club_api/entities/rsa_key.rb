@@ -12,7 +12,9 @@ module SteamClubAPI
         @rsa ||= generate_rsa
       end
 
-      private
+      def encrypt(plain_text)
+        Base64.encode64(rsa.public_encrypt(plain_text)).gsub(/\n/, '')
+      end
 
       def mod
         publickey_mod.to_i(16)
@@ -21,6 +23,8 @@ module SteamClubAPI
       def exp
         publickey_exp.to_i(16)
       end
+
+      private
 
       def generate_rsa
         OpenSSL::PKey::RSA.new.tap do |rsa_key|
