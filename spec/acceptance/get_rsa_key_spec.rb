@@ -12,6 +12,6 @@ describe 'Get RSA key' do
 
   it 'get RSA key by username' do
     rsa_key_resource.get username, rsa_key_url: rsa_key_url
-    expect(WebMock).to have_requested(:post, rsa_key_url)
+    expect(WebMock).to have_requested(:post, "#{rsa_key_url}?username=#{username}")
   end
 end
